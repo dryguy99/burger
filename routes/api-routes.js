@@ -14,59 +14,59 @@ var db = require('../models')
 // =============================================================
 module.exports = function(app) {
 
-  // GET route for getting all of the todos
-  app.get("/api/todos", function(req, res) {
+  // GET route for getting all of the burgers
+  app.get("/api/burgers", function(req, res) {
 
-   db.Todo.findAll({})
+   db.Burgers.findAll({})
         .then(function(result) {
           return res.json(result);
         });
    
   });
 
-  // POST route for saving a new todo. We can create a todo using the data on req.body
-  app.post("/api/todos", function(req, res) {
+  // POST route for saving a new burger. We can create a burger using the data on req.body
+  app.post("/api/burgers", function(req, res) {
 
-    var text = req.body.text;
-    var complete = req.body.complete;
+    var burger = req.body.burger_name;
+    var devoured = req.body.devoured;
     console.log(text);
    
-   db.Todo.create({
-      text: text,
-      complete: complete
-    }).then( function(dbTodo) {
-      res.json(dbTodo);
+   db.Burgers.create({
+      burgers: burger,
+      devoured: devoured,
+    }).then( function(dbBurgers) {
+      res.json(dbBurgers);
     });
   });
 
-  // DELETE route for deleting todos. We can access the ID of the todo to delete in
+  // DELETE route for deleting burgers. We can access the ID of the burger to delete in
   // req.params.id
-  app.delete("/api/todos/:id", function(req, res) {
+  app.delete("/api/burgers/:id", function(req, res) {
     
 
-    db.Todo.destroy({
+    db.Burgers.destroy({
       where: {
         id: req.params.id
       }
-    }).then( function (todo) {
-      res.json(todo);
+    }).then( function (burger) {
+      res.json(burger);
     });
     
   });
 
-  // PUT route for updating todos. We can access the updated todo in req.body
-  app.put("/api/todos", function(req, res) {
-    var newTodo = {
-      text: req.body.text,
-      complete: req.body.complete
+  // PUT route for updating burgers. We can access the updated burger in req.body
+  app.put("/api/burgers", function(req, res) {
+    var newBurgers = {
+      burger_name: req.body.burger_name,
+      devoured: req.body.devoured
     };
 
-    db.Todo.update(newTodo, {
+    db.Burgers.update(newBurgers, {
         where: {
         id: req.body.id
       }
-    }).then( function (todo) {
-      res.json(todo);
+    }).then( function (burger) {
+      res.json(burger);
     });
     
   });
