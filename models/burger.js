@@ -8,8 +8,8 @@ module.exports = function (sequelize, DataTypes) {
 		},
 		devoured: DataTypes.BOOLEAN,
 		date: { 
-			type: Sequelize.DATE,
-			defaultValue: Sequelize.NOW }
+			type: DataTypes.DATE,
+			defaultValue: DataTypes.NOW }
 
 	});
 
