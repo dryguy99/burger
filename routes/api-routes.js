@@ -6,56 +6,61 @@
 // =============================================================
 var db = require('../models')
 
-// grab the orm from the config
-// (remember: connection.js -> orm.js -> route file)
-
 
 // Routes
 // =============================================================
 module.exports = function(app) {
 
   // GET route for getting all of the burgers
-  app.get("/api/burgers", function(req, res) {
-
+  app.get("/", function(req, res) {
+    console.log("3 : select all")
    db.Burgers.findAll({})
         .then(function(result) {
-          return res.json(result);
+          let tmp = result.map((data) => data.dataValues).filter((data) => !data.devoured)
+          console.log(tmp)
+          let tmp2 = result.map((data) => data.dataValues).filter((data) => data.devoured)
+          // console.log(result.getDataValue('burger_name'));
+          res.render("home", { burgers: tmp, eaten : tmp2 });
         });
    
   });
 
-  // POST route for saving a new burger. We can create a burger using the data on req.body
-  app.post("/api/burgers", function(req, res) {
+  // POST route for saving a new burger.
+  app.post("/", function(req, res) {
 
     var burger = req.body.burger_name;
-    var devoured = req.body.devoured;
-    console.log(text);
+    var devoured = false;
+    console.log("1 "+ burger + " : " + devoured);
    
    db.Burgers.create({
-      burgers: burger,
+      burger_name: burger,
       devoured: devoured,
     }).then( function(dbBurgers) {
-      res.json(dbBurgers);
+      //console.log("2 "+dbBurgers.getDataValue('id') +" : " +dbBurgers.getDataValue('burger_name'));
+      //var myburger = dbBurgers.getDataValue();
+      console.log("dataValues", dbBurgers.dataValues);
+      //res.render("home", {burgers: [dbBurgers.dataValues]});
+      res.redirect("/");
     });
   });
 
-  // DELETE route for deleting burgers. We can access the ID of the burger to delete in
+  // DELETE route for deleting burgers. 
   // req.params.id
-  app.delete("/api/burgers/:id", function(req, res) {
-    
+  app.delete("/:id", function(req, res) {
+    console.log(req.params.id);
 
     db.Burgers.destroy({
       where: {
         id: req.params.id
       }
     }).then( function (burger) {
-      res.json(burger);
+      res.redirect("/");
     });
     
   });
 
-  // PUT route for updating burgers. We can access the updated burger in req.body
-  app.put("/api/burgers", function(req, res) {
+  // PUT route for updating burgers. 
+  app.put("/:id", function(req, res) {
     var newBurgers = {
       burger_name: req.body.burger_name,
       devoured: req.body.devoured
@@ -63,10 +68,10 @@ module.exports = function(app) {
 
     db.Burgers.update(newBurgers, {
         where: {
-        id: req.body.id
+        id: req.params.id
       }
     }).then( function (burger) {
-      res.json(burger);
+      res.redirect("/");
     });
     
   });

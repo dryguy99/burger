@@ -6,13 +6,7 @@ module.exports = function (sequelize, DataTypes) {
 			validate: { 
 				len: [1,140] }
 		},
-		devoured: DataTypes.BOOLEAN,
-		date: { 
-			type: DataTypes.DATE,
-			defaultValue: DataTypes.NOW }
-
+		devoured: DataTypes.BOOLEAN
 	});
-
-
 	return Burgers;
 };
