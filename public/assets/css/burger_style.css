@@ -6,6 +6,7 @@ body {
 #mytitle {
 	color: #e67300;
 	font-size: 5vw;
+	font-family: 'Rammetto One', cursive;
 	font-weight: 800;
 	-webkit-text-stroke: 0.2vw #000000;
 	text-shadow:

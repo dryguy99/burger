@@ -31,7 +31,7 @@ var router = express.Router();// get an instance of the express Router
 // middleware to use for all requests
 router.use(function(req, res, next) {
     // do logging
-    console.log('Something is happening.');
+    //console.log('Something is happening.');
     next();
 });
 
@@ -59,6 +59,6 @@ app.use('/', router);
 db.sequelize.sync().then(function () {	
 	// Starting our express app
 	app.listen(PORT, function() {
-	  console.log("App listening on PORT " + PORT);
+	  //console.log("App listening on PORT " + PORT);
 	});
 });
